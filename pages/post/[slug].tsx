@@ -1,5 +1,4 @@
 import { GetStaticProps } from "next";
-import { hostname } from "os";
 import Header from "../../components/Header";
 import { sanityClient, urlFor } from "../../sanity";
 import { Post } from "../../typings";
