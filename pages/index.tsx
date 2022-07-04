@@ -10,13 +10,13 @@ interface Props {
 
 export default function Home({ posts }: Props) {
   return (
-    <div className="">
+    <div>
       <Head>
         <title>Loom Blog</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header></Header>
-      <div className="pt-5 bg-slate-100 h-screen">
+      <div className=" bg-slate-100 min-h-screen">
         <Posts posts={posts}></Posts>
       </div>
     </div>
@@ -24,16 +24,17 @@ export default function Home({ posts }: Props) {
 }
 
 export const getServerSideProps = async () => {
-  const query = `*[_type == "post"]{
+  const query = `*[_type == "post"] | order(_createdAt) {
     _id,
+    _createdAt,
     title,
     author -> {
-    name,
-    image
-  },
-  description,
-  mainImage,
-  slug
+      name,
+      image
+    },
+    description,
+    mainImage,
+    slug
   }`;
 
   const posts = await sanityClient.fetch(query);

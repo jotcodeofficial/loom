@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { urlFor } from "../../../sanity";
 import { Post } from "../../../typings";
+import PostAuthorBox from "./PostAuthorBox";
 
 export default function DefaultPosts({ posts }: { posts: Post[] }) {
   return (
@@ -17,7 +18,7 @@ export default function DefaultPosts({ posts }: { posts: Post[] }) {
                   alt=""
                 />
                 <span className="absolute top-3 right-3  h-5 w-15 inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-blue-900 text-white">
-                  CATEGORY 1
+                  {"category 1".toUpperCase()}
                 </span>
               </div>
             ) : (
@@ -31,33 +32,19 @@ export default function DefaultPosts({ posts }: { posts: Post[] }) {
               </div>
             )}
 
-            <div className="flex justify-between pt-4 ">
+            <div className="flex justify-between mt-4">
               <div>
-                <p className="text-2xl font-bold">{post.title}</p>
-                <p className="text-xl pt-4 text-slate-600">
-                  {post.description}
+                <p className="text-2xl font-bold mb-4">
+                  {post.title.length > 66
+                    ? post.title.substring(0, 66) + "..."
+                    : post.title}
                 </p>
-              </div>
-            </div>
-            <div className="flex  pt-4 ">
-              <div className="pr-4">
-                {post.author.image ? (
-                  <img
-                    className="h-10 w-10 rounded-full"
-                    src={urlFor(post.author.image).url()!}
-                    alt=""
-                  />
-                ) : (
-                  <img
-                    className="h-10 w-10 rounded-full"
-                    src="/images/author-image-unavailable.jpg"
-                    alt=""
-                  />
-                )}
-              </div>
-              <div>
-                <p className="text-md">{post.author.name}</p>
-                <p className="text-xs">{post._createdAt} · 4 min read</p>
+                <p className="text-xl mb-4 text-slate-600">
+                  {post.description.length > 158
+                    ? post.description.substring(0, 158) + "..."
+                    : post.description}
+                </p>
+                <PostAuthorBox post={post}></PostAuthorBox>
               </div>
             </div>
           </div>

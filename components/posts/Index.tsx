@@ -4,13 +4,14 @@ import FeaturedPost from "./components/FeaturedPost";
 import { useState, useCallback, useEffect } from "react";
 
 export default function Posts({ posts }: { posts: Post[] }) {
+  // filter the posts first here by createdAt
   let clonedPosts: Post[] = [...posts];
   let featuredPost: Post = clonedPosts.shift()!;
 
   const isBreakpoint = useMediaQuery(960);
 
   return (
-    <div>
+    <div className="">
       {isBreakpoint ? (
         <div>
           <DefaultPosts posts={posts}></DefaultPosts>
@@ -37,15 +38,17 @@ const useMediaQuery = (width: number) => {
   }, []);
 
   useEffect(() => {
-    const media = window.matchMedia(`(max-width: ${width}px)`);
-    media.addEventListener("change", (e) => updateTarget(e));
+    if (typeof window !== "undefined") {
+      const media = window.matchMedia(`(max-width: ${width}px)`);
+      media.addEventListener("change", (e) => updateTarget(e));
 
-    // Check on mount (callback is not called until a change occurs)
-    if (media.matches) {
-      setTargetReached(true);
+      // Check on mount (callback is not called until a change occurs)
+      if (media.matches) {
+        setTargetReached(true);
+      }
+
+      return () => media.removeEventListener("change", (e) => updateTarget(e));
     }
-
-    return () => media.removeEventListener("change", (e) => updateTarget(e));
   }, []);
 
   return targetReached;

@@ -9,12 +9,9 @@ import {
   faFacebookSquare,
   faLinkedin,
 } from "@fortawesome/free-brands-svg-icons"; // import the icons you need
+import PostAuthorBox from "../../components/posts/components/PostAuthorBox";
 
-interface Props {
-  post: Post;
-}
-
-function Post({ post }: Props) {
+function Post({ post }: { post: Post }) {
   return (
     <main>
       <Header />
@@ -30,20 +27,7 @@ function Post({ post }: Props) {
             </h2>
             <div className="flex justify-between">
               <div className="flex items-center space-x-2 mb-6">
-                <img
-                  className="h-10 w-10 rounded-full"
-                  src={urlFor(post.author.image).url()!}
-                  alt=""
-                />
-                <div>
-                  {" "}
-                  <p className="font-extralight text-sm">
-                    <b>{post.author.name}</b>
-                  </p>
-                  <p className="font-extralight text-sm">
-                    {new Date(post._createdAt).toLocaleDateString()}
-                  </p>
-                </div>
+                <PostAuthorBox post={post}></PostAuthorBox>
               </div>
               <div className="flex items-center">
                 Share:{" "}
@@ -80,7 +64,7 @@ export default Post;
 // get all the slugs for the different pages
 export const getStaticPaths = async () => {
   const query = `
-  *[_type == "post"]{
+  *[_type == "post"] {
     _id,
     slug {
       current

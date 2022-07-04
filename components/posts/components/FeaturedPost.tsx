@@ -17,7 +17,7 @@ export default function FeaturedPost({ post }: { post: Post }) {
                   alt=""
                 />
                 <span className="absolute top-3 right-3  h-5 w-15 inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-blue-900 text-white">
-                  CATEGORY 1
+                  <b> {"category 1".toUpperCase()} </b>
                 </span>
               </div>
             ) : (
@@ -33,8 +33,16 @@ export default function FeaturedPost({ post }: { post: Post }) {
           </div>
           <div className="flex w-1/3 pl-6">
             <div>
-              <p className="text-4xl font-bold mb-4">{post.title}</p>
-              <p className="text-xl text-slate-600 mb-4">{post.description}</p>
+              <p className="text-4xl font-bold mb-4">
+                {post.title.length > 66
+                  ? post.title.substring(0, 66) + "..."
+                  : post.title}
+              </p>
+              <p className="text-xl text-slate-600 mb-4">
+                {post.description.length > 158
+                  ? post.description.substring(0, 158) + "..."
+                  : post.description}
+              </p>
 
               <PostAuthorBox post={post}></PostAuthorBox>
             </div>
