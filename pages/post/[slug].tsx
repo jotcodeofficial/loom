@@ -3,41 +3,71 @@ import Header from "../../components/Header";
 import { sanityClient, urlFor } from "../../sanity";
 import { Post } from "../../typings";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Import the FontAwesomeIcon component
+import {
+  faTwitter,
+  faFacebookSquare,
+  faLinkedin,
+} from "@fortawesome/free-brands-svg-icons"; // import the icons you need
+
 interface Props {
   post: Post;
 }
 
 function Post({ post }: Props) {
-  console.log(post);
   return (
     <main>
       <Header />
       <div className="bg-slate-100 h-screen">
         <div className="max-w-3xl mx-auto p-5">
           <article>
-            <div className="mb-4">
-              <span>CATEGIRY</span>
-            </div>
-            <h1 className="text-5xl mb-4">{post.title}</h1>
-            <h2 className="text-3xl mb-4 text-slate-600 font-light">
+            <div className="mb-4 mt-4 text-sm">CATEGORY</div>
+            <h1 className="text-5xl mb-6">
+              <b>{post.title}</b>
+            </h1>
+            <h2 className="text-2xl mb-6 text-slate-600 font-light">
               {post.description}
             </h2>
+            <div className="flex justify-between">
+              <div className="flex items-center space-x-2 mb-6">
+                <img
+                  className="h-10 w-10 rounded-full"
+                  src={urlFor(post.author.image).url()!}
+                  alt=""
+                />
+                <div>
+                  {" "}
+                  <p className="font-extralight text-sm">
+                    <b>{post.author.name}</b>
+                  </p>
+                  <p className="font-extralight text-sm">
+                    {new Date(post._createdAt).toLocaleDateString()}
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center">
+                Share:{" "}
+                <div className="flex items-center ml-2 space-x-2">
+                  <FontAwesomeIcon
+                    className="w-6 h-6 cursor-pointer"
+                    icon={faTwitter}
+                  ></FontAwesomeIcon>
+                  <FontAwesomeIcon
+                    className="w-6 h-6 cursor-pointer"
+                    icon={faFacebookSquare}
+                  ></FontAwesomeIcon>
+                  <FontAwesomeIcon
+                    className="w-6 h-6 cursor-pointer"
+                    icon={faLinkedin}
+                  ></FontAwesomeIcon>
+                </div>
+              </div>
+            </div>
             <img
               className="w-full"
               src={urlFor(post.mainImage).url()!}
               alt=""
             />
-            <div>
-              <img
-                className="h-10 w-10 rounded-full"
-                src={urlFor(post.author.image).url()!}
-                alt=""
-              />
-              <p className="font-extralight text-sm">
-                Blog post by {post.author.name} - Published at{" "}
-                {new Date(post._createdAt).toLocaleDateString()}
-              </p>
-            </div>
           </article>
         </div>
       </div>

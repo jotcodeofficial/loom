@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Header from "../components/Header";
-import Posts from "../components/Posts";
+import Posts from "../components/posts/Index";
 import { sanityClient, urlFor } from "../sanity";
 import { Post } from "../typings";
 
@@ -8,7 +8,7 @@ interface Props {
   posts: Post[];
 }
 
-export default function Home(props: Props) {
+export default function Home({ posts }: Props) {
   return (
     <div className="">
       <Head>
@@ -16,8 +16,8 @@ export default function Home(props: Props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header></Header>
-      <div className="pt-20 bg-slate-100">
-        <Posts posts={props.posts}></Posts>
+      <div className="pt-5 bg-slate-100 h-screen">
+        <Posts posts={posts}></Posts>
       </div>
     </div>
   );

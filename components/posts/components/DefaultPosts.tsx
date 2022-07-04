@@ -1,12 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import { urlFor } from "../sanity";
-import { Post } from "../typings";
+import { urlFor } from "../../../sanity";
+import { Post } from "../../../typings";
 
-export default function Posts({ posts }: { posts: Post[] }) {
-  console.log(posts);
+export default function DefaultPosts({ posts }: { posts: Post[] }) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 p-2 md:p-6 max-w-7xl mx-auto">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 p-2 md:p-6 max-w-6xl mx-auto">
       {posts.map((post) => (
         <Link key={post._id} href={`/post/${post.slug.current}`}>
           <div className="group cursor-pointer overflow-hidden">
@@ -24,7 +23,11 @@ export default function Posts({ posts }: { posts: Post[] }) {
             ) : (
               <div className="relative">
                 <span className="absolute top-0 right-0 block h-1.5 w-1.5 transform -translate-y-1/2 translate-x-1/2 rounded-full ring-2 ring-white bg-gray-300" />
-                <img src="/images/image-unavailable.png" alt="" />
+                <img
+                  src="/images/image-unavailable.png"
+                  alt=""
+                  className="h-48 w-full object-cover group-hover:scale-105 transition-transform duration-200 ease-in-out"
+                />
               </div>
             )}
 
