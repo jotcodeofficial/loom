@@ -19,11 +19,16 @@ function Post({ post }: { post: Post }) {
         <div className="max-w-3xl mx-auto p-5">
           <article>
             <div className="mb-4 mt-4 text-sm">CATEGORY</div>
-            <h1 className="text-5xl mb-6">
-              <b>{post.title}</b>
+
+            <h1 className="text-5xl font-bold mb-6">
+              {post.title.length > 66
+                ? post.title.substring(0, 66) + "..."
+                : post.title}
             </h1>
             <h2 className="text-2xl mb-6 text-slate-600 font-light">
-              {post.description}
+              {post.description.length > 158
+                ? post.description.substring(0, 158) + "..."
+                : post.description}
             </h2>
             <div className="flex justify-between">
               <div className="flex items-center space-x-2 mb-6">

@@ -4,11 +4,10 @@ import FeaturedPost from "./components/FeaturedPost";
 import { useState, useCallback, useEffect } from "react";
 
 export default function Posts({ posts }: { posts: Post[] }) {
-  // filter the posts first here by createdAt
   let clonedPosts: Post[] = [...posts];
   let featuredPost: Post = clonedPosts.shift()!;
 
-  const isBreakpoint = useMediaQuery(960);
+  const isBreakpoint = useMediaQuery(1025);
 
   return (
     <div className="">

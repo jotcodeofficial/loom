@@ -5,7 +5,7 @@ import PostAuthorBox from "./PostAuthorBox";
 
 export default function FeaturedPost({ post }: { post: Post }) {
   return (
-    <div className="p-2 md:p-6 max-w-6xl mx-auto">
+    <div className="p-2 md:pt-6 md:px-6 max-w-6xl mx-auto">
       <Link key={post._id} href={`/post/${post.slug.current}`}>
         <div className="group cursor-pointer overflow-hidden flex">
           <div className="relative w-2/3">
@@ -16,8 +16,8 @@ export default function FeaturedPost({ post }: { post: Post }) {
                   src={urlFor(post.mainImage).url()!}
                   alt=""
                 />
-                <span className="absolute top-3 right-3  h-5 w-15 inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-blue-900 text-white">
-                  <b> {"category 1".toUpperCase()} </b>
+                <span className="absolute top-3 right-3  h-5 w-15 inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-bold bg-blue-900 text-white">
+                  {"category 1".toUpperCase()}
                 </span>
               </div>
             ) : (
