@@ -18,7 +18,9 @@ export default function DefaultPosts({ posts }: { posts: Post[] }) {
                   alt=""
                 />
                 <span className="absolute top-3 right-3  h-5 w-15 inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-blue-900 text-white">
-                  {"category 1".toUpperCase()}
+                  {"category 2".length > 22
+                    ? ("category 2" + "...").toUpperCase()
+                    : "category 2".toUpperCase()}
                 </span>
               </div>
             ) : (
