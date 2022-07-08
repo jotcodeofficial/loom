@@ -60,7 +60,7 @@ function Post({ post }: { post: Post }) {
                 alt=""
               />
             )}
-            <div>
+            <div className="">
               <PortableText
                 dataset={process.env.NEXT_PUBLIC_SANITY_DATASET!}
                 projectId={process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!}
