@@ -19,18 +19,38 @@ export default function Header() {
               </a>
             </Link>
             <div className="hidden md:inline-flex items-center space-x-5">
-              <h3>Home</h3>
-              <h3>Contact</h3>
-              <h3 className="text-white bg-black px-4 py-1 rounded-full">
-                Submit
-              </h3>
+              <Link href="/">
+                <a>
+                  <h3>Home</h3>
+                </a>
+              </Link>
+              <Link href="/contact">
+                <a>
+                  <h3>Contact</h3>
+                </a>
+              </Link>
+              <Link href="/submit">
+                <a>
+                  <h3 className="text-white bg-black px-4 py-1 rounded-full">
+                    Submit
+                  </h3>
+                </a>
+              </Link>
             </div>
           </div>
           <div className="flex items-center space-x-5 text-black">
-            <h3>Sign In</h3>
-            <h3 className="border px-4 py-1 rounded-md bg-black text-white">
-              Subscribe
-            </h3>
+            <Link href="/sign-in">
+              <a>
+                <h3>Sign In</h3>
+              </a>
+            </Link>
+            <Link href="/subscribe">
+              <a>
+                <h3 className="border px-4 py-1 rounded-md bg-black text-white">
+                  Subscribe
+                </h3>
+              </a>
+            </Link>
           </div>
         </header>
       </div>

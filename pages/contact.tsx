@@ -39,9 +39,9 @@ function Contact() {
                   Get in touch
                 </h1>
                 <p className="mt-6 text-xl text-warm-gray-500 max-w-3xl">
-                  Vel nunc non ut montes, viverra tempor. Proin lectus nibh
-                  phasellus morbi non morbi. In elementum urna ut volutpat.
-                  Sagittis et vel et fermentum amet consequat.
+                  We at Loom value your opinion. Please help us improve our
+                  product by reaching out and letting us know how you feel.
+                  Every voice matters.
                 </p>
               </div>
             </div>
