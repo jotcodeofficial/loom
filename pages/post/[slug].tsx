@@ -2,6 +2,7 @@ import { GetStaticProps } from "next";
 import Header from "../../components/Header";
 import { sanityClient, urlFor } from "../../sanity";
 import { Post } from "../../typings";
+import PortableText from "react-portable-text";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Import the FontAwesomeIcon component
 import {
@@ -15,7 +16,7 @@ function Post({ post }: { post: Post }) {
   return (
     <main>
       <Header />
-      <div className="bg-slate-100 h-screen">
+      <div className="bg-slate-100 min-h-screen">
         <div className="max-w-3xl mx-auto p-5">
           <article>
             <div className="mb-4 mt-4 text-sm">CATEGORY</div>
@@ -52,11 +53,40 @@ function Post({ post }: { post: Post }) {
                 </div>
               </div>
             </div>
-            <img
-              className="w-full"
-              src={urlFor(post.mainImage).url()!}
-              alt=""
-            />
+            {post.showThumbnailInPost === true && (
+              <img
+                className="w-full"
+                src={urlFor(post.mainImage).url()!}
+                alt=""
+              />
+            )}
+            <div>
+              <PortableText
+                dataset={process.env.NEXT_PUBLIC_SANITY_DATASET!}
+                projectId={process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!}
+                content={post.body}
+                serializers={{
+                  h1: (props: any) => (
+                    <h1 className="text-4xl font-bold my-5" {...props} />
+                  ),
+                  h2: (props: any) => (
+                    <h2 className="text-3xl font-bold my-5" {...props} />
+                  ),
+                  li: ({ children }: any) => (
+                    <li className="ml-4 list-disc">{children}</li>
+                  ),
+                  link: ({ href, children }: any) => (
+                    <a
+                      href={href}
+                      target="_blank"
+                      className="text-blue-500 hover:underline"
+                    >
+                      {children}
+                    </a>
+                  ),
+                }}
+              />
+            </div>
           </article>
         </div>
       </div>
@@ -108,7 +138,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       description,
       mainImage,
       slug,
-      body
+      body,
+      showThumbnailInPost
     }`;
 
   const post = await sanityClient.fetch(query, {

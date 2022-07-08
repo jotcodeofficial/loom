@@ -16,4 +16,5 @@ export interface Post {
     current: string;
   };
   body: object[];
+  showThumbnailInPost: boolean;
 }

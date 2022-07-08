@@ -5,7 +5,7 @@ import PostAuthorBox from "./PostAuthorBox";
 
 export default function FeaturedPost({ post }: { post: Post }) {
   return (
-    <div className="p-2 md:pt-6 md:px-6 max-w-6xl mx-auto">
+    <div className="p-2 md:pt-8 md:px-6 max-w-6xl mx-auto">
       <Link key={post._id} href={`/post/${post.slug.current}`}>
         <div className="group cursor-pointer overflow-hidden flex">
           <div className="relative w-2/3">
