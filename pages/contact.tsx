@@ -1,8 +1,16 @@
 import Header from "../components/Header";
 import { ChangeEvent, Fragment, SVGProps, useState } from "react";
-import { Popover, Transition } from "@headlessui/react";
 import { MailIcon, MenuIcon, PhoneIcon, XIcon } from "@heroicons/react/outline";
 import Footer from "../components/Footer";
+import { useForm, SubmitHandler } from "react-hook-form";
+
+interface ContactFormInput {
+  _id: string;
+  name: string;
+  subject: string;
+  email: string;
+  message: string;
+}
 
 const offices = [
   {
@@ -25,6 +33,14 @@ const offices = [
 
 function Contact() {
   const [messageCharCount, setMessageCharCount] = useState(0);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ContactFormInput>();
+
+  const onSubmit: SubmitHandler<ContactFormInput> = async (data) => {};
 
   return (
     <main>
@@ -92,6 +108,8 @@ function Contact() {
                 />
               </svg>
             </div>
+
+            {/* Contact Form */}
             <div className="pl-4 sm:pl-6 lg:pl-8">
               <div className="relative  shadow-xl rounded-tl-2xl lg:rounded-l-3xl  rounded-bl-2xl lg:rounded-none ">
                 <h2 id="contact-heading" className="sr-only">
@@ -296,44 +314,40 @@ function Contact() {
                       Send us a message
                     </h3>
                     <form
-                      action="#"
-                      method="POST"
+                      onSubmit={handleSubmit(onSubmit)}
                       className="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8"
                     >
+                      <input
+                        {...register("_id")}
+                        type="hidden"
+                        name="_id"
+                        value={"contact"}
+                      />
+
                       <div>
                         <label
                           htmlFor="first-name"
                           className="block text-sm font-medium text-warm-gray-900"
                         >
-                          First name
+                          Name
                         </label>
                         <div className="mt-1">
                           <input
+                            {...register("name", { required: true })}
                             type="text"
-                            name="first-name"
-                            id="first-name"
+                            name="name"
+                            id="name"
                             autoComplete="given-name"
-                            className="py-3 px-4 block w-full shadow-sm text-warm-gray-900 focus:ring-teal-500 focus:border-teal-500 border-warm-gray-300 rounded-md"
+                            className="py-3 px-4 block w-full shadow-sm text-warm-gray-900 ring-teal-500 focus:ring-red-500 focus:border-teal-500 border-warm-gray-300 rounded-md"
                           />
+                          {errors.name && (
+                            <p className="text-sm text-red-400 text-right pt-1 pr-2">
+                              Name is required
+                            </p>
+                          )}
                         </div>
                       </div>
-                      <div>
-                        <label
-                          htmlFor="last-name"
-                          className="block text-sm font-medium text-warm-gray-900"
-                        >
-                          Last name
-                        </label>
-                        <div className="mt-1">
-                          <input
-                            type="text"
-                            name="last-name"
-                            id="last-name"
-                            autoComplete="family-name"
-                            className="py-3 px-4 block w-full shadow-sm text-warm-gray-900 focus:ring-teal-500 focus:border-teal-500 border-warm-gray-300 rounded-md"
-                          />
-                        </div>
-                      </div>
+
                       <div>
                         <label
                           htmlFor="email"
@@ -343,40 +357,20 @@ function Contact() {
                         </label>
                         <div className="mt-1">
                           <input
-                            id="email"
-                            name="email"
+                            {...register("email", { required: true })}
                             type="email"
-                            autoComplete="email"
+                            name="email"
+                            id="email"
                             className="py-3 px-4 block w-full shadow-sm text-warm-gray-900 focus:ring-teal-500 focus:border-teal-500 border-warm-gray-300 rounded-md"
                           />
+                          {errors.email && (
+                            <p className="text-sm text-red-400 text-right pt-1 pr-2">
+                              Email is required
+                            </p>
+                          )}
                         </div>
                       </div>
-                      <div>
-                        <div className="flex justify-between">
-                          <label
-                            htmlFor="phone"
-                            className="block text-sm font-medium text-warm-gray-900"
-                          >
-                            Phone
-                          </label>
-                          <span
-                            id="phone-optional"
-                            className="text-sm text-warm-gray-500"
-                          >
-                            Optional
-                          </span>
-                        </div>
-                        <div className="mt-1">
-                          <input
-                            type="text"
-                            name="phone"
-                            id="phone"
-                            autoComplete="tel"
-                            className="py-3 px-4 block w-full shadow-sm text-warm-gray-900 focus:ring-teal-500 focus:border-teal-500 border-warm-gray-300 rounded-md"
-                            aria-describedby="phone-optional"
-                          />
-                        </div>
-                      </div>
+
                       <div className="sm:col-span-2">
                         <label
                           htmlFor="subject"
@@ -386,11 +380,17 @@ function Contact() {
                         </label>
                         <div className="mt-1">
                           <input
+                            {...register("subject", { required: true })}
                             type="text"
                             name="subject"
                             id="subject"
                             className="py-3 px-4 block w-full shadow-sm text-warm-gray-900 focus:ring-teal-500 focus:border-teal-500 border-warm-gray-300 rounded-md"
                           />
+                          {errors.subject && (
+                            <p className="text-sm text-red-400 text-right pt-1 pr-2">
+                              Subject is required
+                            </p>
+                          )}
                         </div>
                       </div>
                       <div className="sm:col-span-2">
@@ -414,6 +414,7 @@ function Contact() {
                         </div>
                         <div className="mt-1">
                           <textarea
+                            {...register("message", { required: true })}
                             id="message"
                             name="message"
                             rows={4}
@@ -425,8 +426,14 @@ function Contact() {
                             defaultValue={""}
                             maxLength={500}
                           />
+                          {errors.message && (
+                            <p className="text-sm text-red-400 text-right pt-1 pr-2">
+                              Message is required
+                            </p>
+                          )}
                         </div>
                       </div>
+
                       <div className="sm:col-span-2 sm:flex sm:justify-end">
                         <button
                           type="submit"
