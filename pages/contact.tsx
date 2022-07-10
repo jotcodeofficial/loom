@@ -1,15 +1,16 @@
 import Header from "../components/Header";
-import { ChangeEvent, Fragment, SVGProps, useState } from "react";
+import { ChangeEvent, Fragment, SVGProps, useRef, useState } from "react";
 import { MailIcon, MenuIcon, PhoneIcon, XIcon } from "@heroicons/react/outline";
 import Footer from "../components/Footer";
 import { useForm, SubmitHandler } from "react-hook-form";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
 
 interface ContactFormInput {
-  _id: string;
   name: string;
   subject: string;
   email: string;
   message: string;
+  token: string;
 }
 
 const offices = [
@@ -33,6 +34,12 @@ const offices = [
 
 function Contact() {
   const [messageCharCount, setMessageCharCount] = useState(0);
+  const [messageSubmitted, setMessageSubmitted] = useState(false);
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const [token, setToken] = useState<string>();
+  const [captchaError, setCapthcaError] = useState("");
+  const captchaRef = useRef<HCaptcha>(null);
 
   const {
     register,
@@ -40,7 +47,39 @@ function Contact() {
     formState: { errors },
   } = useForm<ContactFormInput>();
 
-  const onSubmit: SubmitHandler<ContactFormInput> = async (data) => {};
+  const onSubmit: SubmitHandler<ContactFormInput> = (data) => {
+    if (!token) {
+      console.log("hcaptcha is not verified");
+      setCapthcaError("hcaptcha is not verified");
+      return;
+    }
+    setCapthcaError("");
+    setLoading(true);
+
+    captchaRef.current!.execute();
+    data.token = token;
+
+    fetch("/api/createMessage", {
+      method: "POST",
+      body: JSON.stringify(data),
+    })
+      .then(() => {
+        console.log(data);
+        setMessageSubmitted(true);
+      })
+      .catch((err) => {
+        setCapthcaError(err.data.error);
+        setMessageSubmitted(false);
+      })
+      .finally(() => {
+        setLoading(false);
+        setToken("");
+      });
+  };
+
+  const onError = (err: any) => {
+    console.log(`hCaptcha Error: ${err}`);
+  };
 
   return (
     <main>
@@ -310,139 +349,158 @@ function Contact() {
 
                   {/* Contact form */}
                   <div className="py-10 px-6 sm:px-10 lg:col-span-2 xl:p-12  bg-gradient-to-b from-slate-100 to-slate-200 rounded-bl-2xl lg:rounded-none">
-                    <h3 className="text-lg font-medium text-warm-gray-900">
-                      Send us a message
-                    </h3>
-                    <form
-                      onSubmit={handleSubmit(onSubmit)}
-                      className="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8"
-                    >
-                      <input
-                        {...register("_id")}
-                        type="hidden"
-                        name="_id"
-                        value={"contact"}
-                      />
-
+                    {messageSubmitted ? (
+                      <h3 className="text-xl  text-warm-gray-900 text-center">
+                        Thank you for sending a message
+                      </h3>
+                    ) : loading ? (
+                      <div className="flex justify-center pt-20">
+                        <div className=" w-16 h-16 border-4 border-teal-500 border-dashed rounded-full animate-spin"></div>
+                      </div>
+                    ) : (
                       <div>
-                        <label
-                          htmlFor="first-name"
-                          className="block text-sm font-medium text-warm-gray-900"
+                        <h3 className="text-lg font-medium text-warm-gray-900">
+                          Send us a message
+                        </h3>
+                        <form
+                          onSubmit={handleSubmit(onSubmit)}
+                          className="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8"
                         >
-                          Name
-                        </label>
-                        <div className="mt-1">
-                          <input
-                            {...register("name", { required: true })}
-                            type="text"
-                            name="name"
-                            id="name"
-                            autoComplete="given-name"
-                            className="py-3 px-4 block w-full shadow-sm text-warm-gray-900 ring-teal-500 focus:ring-red-500 focus:border-teal-500 border-warm-gray-300 rounded-md"
-                          />
-                          {errors.name && (
-                            <p className="text-sm text-red-400 text-right pt-1 pr-2">
-                              Name is required
-                            </p>
-                          )}
-                        </div>
-                      </div>
+                          <div>
+                            <label
+                              htmlFor="first-name"
+                              className="block text-sm font-medium text-warm-gray-900"
+                            >
+                              Name
+                            </label>
+                            <div className="mt-1">
+                              <input
+                                {...register("name", { required: true })}
+                                type="text"
+                                name="name"
+                                id="name"
+                                autoComplete="given-name"
+                                className="py-3 px-4 block w-full shadow-sm text-warm-gray-900 ring-teal-500 focus:ring-red-500 focus:border-teal-500 border-warm-gray-300 rounded-md"
+                              />
+                              {errors.name && (
+                                <p className="text-sm text-red-400 text-right pt-1 pr-2">
+                                  Name is required
+                                </p>
+                              )}
+                            </div>
+                          </div>
 
-                      <div>
-                        <label
-                          htmlFor="email"
-                          className="block text-sm font-medium text-warm-gray-900"
-                        >
-                          Email
-                        </label>
-                        <div className="mt-1">
-                          <input
-                            {...register("email", { required: true })}
-                            type="email"
-                            name="email"
-                            id="email"
-                            className="py-3 px-4 block w-full shadow-sm text-warm-gray-900 focus:ring-teal-500 focus:border-teal-500 border-warm-gray-300 rounded-md"
-                          />
-                          {errors.email && (
-                            <p className="text-sm text-red-400 text-right pt-1 pr-2">
-                              Email is required
-                            </p>
-                          )}
-                        </div>
-                      </div>
+                          <div>
+                            <label
+                              htmlFor="email"
+                              className="block text-sm font-medium text-warm-gray-900"
+                            >
+                              Email
+                            </label>
+                            <div className="mt-1">
+                              <input
+                                {...register("email", { required: true })}
+                                type="email"
+                                name="email"
+                                autoComplete="email"
+                                id="email"
+                                className="py-3 px-4 block w-full shadow-sm text-warm-gray-900 focus:ring-teal-500 focus:border-teal-500 border-warm-gray-300 rounded-md"
+                              />
+                              {errors.email && (
+                                <p className="text-sm text-red-400 text-right pt-1 pr-2">
+                                  Email is required
+                                </p>
+                              )}
+                            </div>
+                          </div>
 
-                      <div className="sm:col-span-2">
-                        <label
-                          htmlFor="subject"
-                          className="block text-sm font-medium text-warm-gray-900"
-                        >
-                          Subject
-                        </label>
-                        <div className="mt-1">
-                          <input
-                            {...register("subject", { required: true })}
-                            type="text"
-                            name="subject"
-                            id="subject"
-                            className="py-3 px-4 block w-full shadow-sm text-warm-gray-900 focus:ring-teal-500 focus:border-teal-500 border-warm-gray-300 rounded-md"
-                          />
-                          {errors.subject && (
-                            <p className="text-sm text-red-400 text-right pt-1 pr-2">
-                              Subject is required
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                      <div className="sm:col-span-2">
-                        <div className="flex justify-between">
-                          <label
-                            htmlFor="message"
-                            className="block text-sm font-medium text-warm-gray-900"
-                          >
-                            Message
-                          </label>
-                          <span
-                            id="message-max"
-                            className="text-sm text-warm-gray-500"
-                          >
-                            Max:{" "}
-                            {messageCharCount > 0
-                              ? " " + messageCharCount + "/"
-                              : ""}
-                            500 characters
-                          </span>
-                        </div>
-                        <div className="mt-1">
-                          <textarea
-                            {...register("message", { required: true })}
-                            id="message"
-                            name="message"
-                            rows={4}
-                            onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-                              setMessageCharCount(e.target.value.length)
+                          <div className="sm:col-span-2">
+                            <label
+                              htmlFor="subject"
+                              className="block text-sm font-medium text-warm-gray-900"
+                            >
+                              Subject
+                            </label>
+                            <div className="mt-1">
+                              <input
+                                {...register("subject", { required: true })}
+                                type="text"
+                                name="subject"
+                                id="subject"
+                                className="py-3 px-4 block w-full shadow-sm text-warm-gray-900 focus:ring-teal-500 focus:border-teal-500 border-warm-gray-300 rounded-md"
+                              />
+                              {errors.subject && (
+                                <p className="text-sm text-red-400 text-right pt-1 pr-2">
+                                  Subject is required
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                          <div className="sm:col-span-2">
+                            <div className="flex justify-between">
+                              <label
+                                htmlFor="message"
+                                className="block text-sm font-medium text-warm-gray-900"
+                              >
+                                Message
+                              </label>
+                              <span
+                                id="message-max"
+                                className="text-sm text-warm-gray-500"
+                              >
+                                Max:{" "}
+                                {messageCharCount > 0
+                                  ? " " + messageCharCount + "/"
+                                  : ""}
+                                500 characters
+                              </span>
+                            </div>
+                            <div className="mt-1">
+                              <textarea
+                                {...register("message", { required: true })}
+                                id="message"
+                                name="message"
+                                rows={4}
+                                onChange={(
+                                  e: ChangeEvent<HTMLTextAreaElement>
+                                ) => setMessageCharCount(e.target.value.length)}
+                                className="py-3 px-4 block w-full shadow-sm text-warm-gray-900 focus:ring-teal-500 focus:border-teal-500 border border-warm-gray-300 rounded-md"
+                                aria-describedby="message-max"
+                                defaultValue={""}
+                                maxLength={500}
+                              />
+                              {errors.message && (
+                                <p className="text-sm text-red-400 text-right pt-1 pr-2">
+                                  Message is required
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                          <HCaptcha
+                            sitekey={
+                              process.env.NEXT_PUBLIC_TEST_HCAPTCHA_SITE_KEY
                             }
-                            className="py-3 px-4 block w-full shadow-sm text-warm-gray-900 focus:ring-teal-500 focus:border-teal-500 border border-warm-gray-300 rounded-md"
-                            aria-describedby="message-max"
-                            defaultValue={""}
-                            maxLength={500}
+                            onVerify={(token) => setToken(token)}
+                            onError={onError}
+                            onExpire={() => setToken("")}
+                            ref={captchaRef}
                           />
-                          {errors.message && (
+                          {captchaError && (
                             <p className="text-sm text-red-400 text-right pt-1 pr-2">
-                              Message is required
+                              {captchaError}
                             </p>
                           )}
-                        </div>
+                          <div className="sm:col-span-2 sm:flex sm:justify-end">
+                            <button
+                              type="submit"
+                              className="mt-2 w-full inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-teal-500 hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 sm:w-auto"
+                            >
+                              Submit
+                            </button>
+                          </div>
+                        </form>
                       </div>
-
-                      <div className="sm:col-span-2 sm:flex sm:justify-end">
-                        <button
-                          type="submit"
-                          className="mt-2 w-full inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-teal-500 hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 sm:w-auto"
-                        >
-                          Submit
-                        </button>
-                      </div>
-                    </form>
+                    )}
                   </div>
                 </div>
               </div>
