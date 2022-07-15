@@ -22,7 +22,7 @@ export default function PostAuthorBox({ post }: { post: Post }) {
       <div>
         <p className="text-md">{post.author.name}</p>
         <p className="text-xs">
-          {new Date(post._createdAt).toLocaleDateString()} · 4 min read
+          {new Date(post._createdAt).toLocaleDateString()} · {1} min read
         </p>
       </div>
     </div>

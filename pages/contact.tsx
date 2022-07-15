@@ -477,9 +477,7 @@ function Contact() {
                             </div>
                           </div>
                           <HCaptcha
-                            sitekey={
-                              process.env.NEXT_PUBLIC_TEST_HCAPTCHA_SITE_KEY
-                            }
+                            sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY}
                             onVerify={(token) => setToken(token)}
                             onError={onError}
                             onExpire={() => setToken("")}

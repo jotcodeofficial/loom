@@ -60,17 +60,22 @@ function Post({ post }: { post: Post }) {
                 alt=""
               />
             )}
+
             <div className="">
               <PortableText
                 dataset={process.env.NEXT_PUBLIC_SANITY_DATASET!}
                 projectId={process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!}
                 content={post.body}
                 serializers={{
+                  normal: (props: any) => <p className="my-5" {...props} />,
                   h1: (props: any) => (
                     <h1 className="text-4xl font-bold my-5" {...props} />
                   ),
                   h2: (props: any) => (
                     <h2 className="text-3xl font-bold my-5" {...props} />
+                  ),
+                  h3: (props: any) => (
+                    <h2 className="text-2xl font-bold my-5" {...props} />
                   ),
                   li: ({ children }: any) => (
                     <li className="ml-4 list-disc">{children}</li>
@@ -139,7 +144,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       mainImage,
       slug,
       body,
-      showThumbnailInPost
+      showThumbnailInPost,
+      "numberOfCharacters": length(pt::text(body)),
     }`;
 
   const post = await sanityClient.fetch(query, {

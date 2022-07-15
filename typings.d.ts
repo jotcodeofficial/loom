@@ -17,4 +17,5 @@ export interface Post {
   };
   body: object[];
   showThumbnailInPost: boolean;
+  numberOfCharacters?: number;
 }

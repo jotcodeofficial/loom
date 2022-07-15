@@ -17,9 +17,9 @@ export default function FeaturedPost({ post }: { post: Post }) {
                   alt=""
                 />
                 <span className="absolute top-3 right-3  h-5 w-15 inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-bold bg-blue-900 text-white">
-                  {"category 2".length > 22
-                    ? ("category 2" + "...").toUpperCase()
-                    : "category 2".toUpperCase()}
+                  {"software".length > 22
+                    ? ("software" + "...").toUpperCase()
+                    : "software".toUpperCase()}
                 </span>
               </div>
             ) : (
@@ -41,8 +41,8 @@ export default function FeaturedPost({ post }: { post: Post }) {
                   : post.title}
               </p>
               <p className="text-xl text-slate-600 mb-4">
-                {post.description.length > 158
-                  ? post.description.substring(0, 158) + "..."
+                {post.description.length > 107
+                  ? post.description.substring(0, 107) + "..."
                   : post.description}
               </p>
 

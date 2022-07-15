@@ -18,12 +18,12 @@ export default async function createMessage(
   const { name, email, subject, message, token } = JSON.parse(req.body);
 
   if (!token) {
-    return res.status(500).json({
+    return res.status(400).json({
       message: "Could not submit message due to missing captcha token",
     });
   }
 
-  const secretParam = "secret=" + process.env.TEST_HCAPTCHA_SECRET_KEY;
+  const secretParam = "secret=" + process.env.HCAPTCHA_SECRET_KEY;
   const responseParam = "response=" + token;
 
   try {
@@ -39,14 +39,14 @@ export default async function createMessage(
 
     if (!captchaValidation.success) {
       console.log(captchaValidation.success);
-      return res.status(500).json({
+      return res.status(400).json({
         message: "Could not submit message due to captcha error",
       });
     }
     console.log("finally worked");
   } catch (err) {
     console.log(err);
-    return res.status(500).json({
+    return res.status(400).json({
       message: "Could not submit message due to captcha error",
       err,
     });
