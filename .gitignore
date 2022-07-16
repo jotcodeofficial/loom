@@ -37,4 +37,16 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 
-loom-sanity
+loom-sanity/node_modules
+loom-sanity/sanity.json
+loom-sanity/dist 
+
+# Logs
+loom-sanity/logs
+loom-sanity/*.log
+
+# Coverage directory used by tools like istanbul
+loom-sanity/coverage
+
+
+
