@@ -17,7 +17,7 @@ function Post({ post }: { post: Post }) {
     <main>
       <Header />
       <div className="bg-slate-100 min-h-screen">
-        <div className="max-w-3xl mx-auto p-5">
+        <div className="md:max-w-3xl lg:max-w-4xl mx-auto p-5">
           <article>
             <div className="mb-4 mt-4 text-sm">CATEGORY</div>
 
