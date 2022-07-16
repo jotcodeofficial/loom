@@ -65,8 +65,20 @@
     <a href="https://github.com/jotcodeofficial/loom">
         <img width="941px" height="556px" src="https://github.com/jotcodeofficial/Storage/blob/master/loom/project.png" align="center" alt="Loom Project Image" />
     </a>
- <h2 align="center">Loom Blog</h2>
- <p align="center">Blog for NextJS and Sanity CMS</p>
+
+        <a href="https://github.com/jotcodeofficial/loom">
+        <img  src="https://github.com/jotcodeofficial/Storage/blob/master/loom/2.png" align="center" alt="Loom Project Image 2" />
+    </a>
+    
+        <a href="https://github.com/jotcodeofficial/loom">
+        <img  src="https://github.com/jotcodeofficial/Storage/blob/master/loom/3.png" align="center" alt="Loom Project Image 3" />
+    </a>
+    
+        <a href="https://github.com/jotcodeofficial/loom">
+        <img  src="https://github.com/jotcodeofficial/Storage/blob/master/loom/4.png" align="center" alt="Loom Project Image 4" />
+    </a>
+    
+    
 </p>
 
 An easy to set up blog built in NextJS and integrated with Sanity CMS.
