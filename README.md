@@ -64,19 +64,19 @@
 <p align="center">
     
     <a href="https://github.com/jotcodeofficial/loom">
-        <img width="941px" src="https://github.com/jotcodeofficial/Storage/blob/master/loom/project.png" align="center" alt="Loom Project Image" />
+        <img width="941px" height="556px" src="https://github.com/jotcodeofficial/Storage/blob/master/loom/project.png" align="center" alt="Loom Project Image" />
     </a>
 
     <a href="https://github.com/jotcodeofficial/loom">
-        <img  width="941px" src="https://github.com/jotcodeofficial/Storage/blob/master/loom/2.png" align="center" alt="Loom Project Image 2" />
+        <img  width="941px"  height="556px" src="https://github.com/jotcodeofficial/Storage/blob/master/loom/2.png" align="center" alt="Loom Project Image 2" />
     </a>
     
     <a href="https://github.com/jotcodeofficial/loom">
-        <img  width="613px" src="https://github.com/jotcodeofficial/Storage/blob/master/loom/3.png" align="center" alt="Loom Project Image 3" />
+        <img  width="613px" height="556px" src="https://github.com/jotcodeofficial/Storage/blob/master/loom/3.png" align="center" alt="Loom Project Image 3" />
     </a>
     
     <a href="https://github.com/jotcodeofficial/loom">
-        <img  width="613px" src="https://github.com/jotcodeofficial/Storage/blob/master/loom/4.png" align="center" alt="Loom Project Image 4" />
+        <img  width="613px" height="554px" src="https://github.com/jotcodeofficial/Storage/blob/master/loom/4.png" align="center" alt="Loom Project Image 4" />
     </a>
     
     
