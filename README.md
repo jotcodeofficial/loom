@@ -63,6 +63,8 @@
 
 <p align="center">
 An easy to set up blog built in NextJS and integrated with Sanity CMS.
+</p>
+<p align="center">
 Check it out: http://loom-theta.vercel.app/
 </p>
 
