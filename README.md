@@ -82,6 +82,12 @@
     
 </p>
 
+<p align="center">
+    <a href="https://github.com/jotcodeofficial/ultimate-readme">
+        <img width="400px" src="images/project.png" align="center" alt="The Ultimate Readme Project Image" />
+    </a>
+</p>
+
 An easy to set up blog built in NextJS and integrated with Sanity CMS.
 
 ---
