@@ -62,7 +62,9 @@
 ## About Loom
 
 <p align="center">
-    <a href="https://github.com/jotcodeofficial/loom" style="padding-bottom: 30px">
+    An easy to set up blog built in NextJS and integrated with Sanity CMS.
+    
+    <a href="https://github.com/jotcodeofficial/loom">
         <img width="941px" height="556px" src="https://github.com/jotcodeofficial/Storage/blob/master/loom/project.png" align="center" alt="Loom Project Image" />
     </a>
     <a href="https://github.com/jotcodeofficial/loom">
@@ -77,8 +79,6 @@
 </p>
 
 
-
-An easy to set up blog built in NextJS and integrated with Sanity CMS.
 
 ---
 
