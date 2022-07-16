@@ -62,8 +62,10 @@
 ## About Loom
 
 <p align="center">
-    An easy to set up blog built in NextJS and integrated with Sanity CMS.
-    
+An easy to set up blog built in NextJS and integrated with Sanity CMS.
+</p>
+
+<p align="center">
     <a href="https://github.com/jotcodeofficial/loom">
         <img width="941px" height="556px" src="https://github.com/jotcodeofficial/Storage/blob/master/loom/project.png" align="center" alt="Loom Project Image" />
     </a>
