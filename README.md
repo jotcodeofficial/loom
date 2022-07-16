@@ -108,6 +108,40 @@ NEXT_PUBLIC_TEST_HCAPTCHA_SITE_KEY=10000000-ffff-ffff-ffff-000000000001
 TEST_HCAPTCHA_SECRET_KEY=0x0000000000000000000000000000000000000000
 ```
 
+For santiy studio, add a santiy.json file to the root of your loom-santiy folder:
+
+```
+{
+  "root": true,
+  "project": {
+    "name": "loom-sanity"
+  },
+  "api": {
+    "projectId": "ENTER-SANTIY-PROJECT-ID-HERE",
+    "dataset": "production"
+  },
+  "plugins": [
+    "@sanity/base",
+    "@sanity/default-layout",
+    "@sanity/default-login",
+    "@sanity/desk-tool"
+  ],
+  "env": {
+    "development": {
+      "plugins": [
+        "@sanity/vision"
+      ]
+    }
+  },
+  "parts": [
+    {
+      "name": "part:@sanity/base/schema",
+      "path": "./schemas/schema"
+    }
+  ]
+}
+```
+
 ### Installation
 
 Get started on your own machine.
