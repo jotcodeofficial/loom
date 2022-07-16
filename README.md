@@ -27,9 +27,9 @@
   </p>
 
   <p align="center">
-    <a href="https://github.com/jotcodeofficial/ultimate-readme/issues/new/choose">Report Bug</a>
+    <a href="https://github.com/jotcodeofficial/loom/issues/new/choose">Report Bug</a>
     -
-    <a href="https://github.com/jotcodeofficial/ultimate-readme/issues/new/choose">Request Feature</a>
+    <a href="https://github.com/jotcodeofficial/loom/issues/new/choose">Request Feature</a>
   </p>
 
 # Index
